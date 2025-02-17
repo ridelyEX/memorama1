@@ -11,10 +11,14 @@ class Parrilla extends StatefulWidget {
 }
 
 class _ParrillaState extends State<Parrilla> {
+  int? clicked=0, preclicked=-1;
+  bool? flag =false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    cartas = [];
+    initialState=[];
     inicializar(widget.nivel!);
   }
   @override
@@ -25,10 +29,38 @@ class _ParrillaState extends State<Parrilla> {
       gridDelegate:
           SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       itemBuilder: (context, index) => FlipCard(
+        onFlip: (){
+          if(!flag!){
+            preclicked=index;
+            clicked=0;
+            flag=true;
+          }else{
+            clicked=index;
+            flag=false;
+          }
+          if (preclicked!=clicked){
+            //voltear cartas
+          }
+          if (cartas.elementAt(clicked!)==cartas.elementAt(preclicked!)){
+            debugPrint("Clicked: son iguales");
+          }else{
+            Future.delayed(Duration(seconds:1),(){
+              controllers[clicked!].controller?.toggle();
+              controllers[preclicked!].controller?.toggle();
+            },);
+          }
+          debugPrint("Clicked: $index");
+          debugPrint("preClicked: $index");
+
+        },
           direction: FlipDirection.HORIZONTAL,
-          autoFlipDuration: const Duration(milliseconds: 500),
-          front: Image.asset(cartas[index]),
-          back: Image.asset("./images/reverso.png")),
+          fill: Fill.fillBack,
+          flipOnTouch: true,
+          controller: controllers[index],
+          // autoFlipDuration: const Duration(milliseconds: 500),
+          back: Image.asset(cartas[index]),
+          front: Image.asset("./images/reverso.png")),
+
     );
   }
 }
