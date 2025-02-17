@@ -45,8 +45,8 @@ class _ParrillaState extends State<Parrilla> {
             debugPrint("Clicked: son iguales");
           }else{
             Future.delayed(Duration(seconds:1),(){
-              controllers[clicked!].controller?.toggle();
-              controllers[preclicked!].controller?.toggle();
+              controllers.elementAt(clicked!).toggleCard();
+              controllers.elementAt(preclicked!).toggleCard();
             },);
           }
           debugPrint("Clicked: $index");
