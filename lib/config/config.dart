@@ -1,4 +1,4 @@
-library config.global;
+library;
 
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:memorama/utilis/detalles.dart';
@@ -60,7 +60,7 @@ List<Detalles> inicio = [
       const Tablero(nivel: Nivel.medio), Nivel.medio),
   Detalles("Dificil", Colors.orange, Colors.orange[200],
       const Tablero(nivel: Nivel.dificil), Nivel.dificil),
-  Detalles("Imposible negro", Colors.red, Colors.red[400],
+  Detalles("Imposible", Colors.red, Colors.red[400],
       const Tablero(nivel: Nivel.imposible), Nivel.imposible),
 ];
 List <bool> initialState=[];
@@ -72,21 +72,23 @@ void inicializar(Nivel nivel){
   int size=0;
   switch(nivel){
     case Nivel.facil:
-      size=10;
+      size=12;
       break;
     case Nivel.imposible:
       size=40;
       break;
     case Nivel.dificil:
-      size=30;
+      size=32;
       break;
     case Nivel.medio:
       size=20;
       break;
   }
   for(int i=0;i<size;i++){
-    initialState.add(true);
-    cartas.add(cards()[i]);
+    initialState.add(false);
+    cartas.add(tmp[i]);
     controllers.add(FlipCardController());
   }
+  cartas.shuffle();
+  cartas.shuffle();
 }
